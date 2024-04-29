@@ -4,11 +4,13 @@ from . import forms, models
 
 
 def home(request):
-    # if request.GET["consulta"]:
-    # consulta = request.GET["consulta"]
-    # query = models.ProductoCategoria.objects.filter(nombre__icontains=consulta)
-    # else:
-    query = models.ProductoCategoria.objects.all()
+    consulta = request.GET.get("consulta", None)
+
+    if consulta:
+        print(consulta)
+        query = models.ProductoCategoria.objects.filter(nombre__icontains=consulta)
+    else:
+        query = models.ProductoCategoria.objects.all()
 
     context = {"productos": query}
     return render(request, "producto/index.html", context)
